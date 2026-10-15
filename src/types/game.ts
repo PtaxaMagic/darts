@@ -16,6 +16,7 @@ export interface HistoryEntry {
 export interface GameSetupConfig {
   playerNames: string[]
   startScore: number
+  throwsPerLeg: number
   playToLast: boolean
   endWithDouble: boolean
 }

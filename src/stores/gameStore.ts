@@ -43,6 +43,7 @@ export const useGameStore = defineStore('game', () => {
   const playToLast = shallowRef(true)
   const endWithDouble = shallowRef(true)
   const startScore = shallowRef(301)
+  const maxThrowsPerLeg = shallowRef(3)
 
   // ─── Множитель (только для классической доски)
   const multiplier = shallowRef(1)
@@ -86,6 +87,7 @@ export const useGameStore = defineStore('game', () => {
     startScore.value = config.startScore
     playToLast.value = config.playToLast
     endWithDouble.value = config.endWithDouble
+    maxThrowsPerLeg.value = config.throwsPerLeg
     currentPlayerIndex.value = 0
     currentPlace.value = 1
     roundNumber.value = 1
@@ -112,7 +114,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function addScore(baseValue: number, zoneMultiplier?: number): void {
-    if (currentTurnThrows.value.length >= MAX_THROWS_PER_TURN) return
+    if (currentTurnThrows.value.length >= maxThrowsPerLeg.value) return
     if (isGameOver.value || isProcessingTurn.value) return
     if (!currentPlayer.value || currentPlayer.value.isFinished) return
 
@@ -127,7 +129,7 @@ export const useGameStore = defineStore('game', () => {
     })
     multiplier.value = 1
 
-    if (currentTurnThrows.value.length === MAX_THROWS_PER_TURN) {
+    if (currentTurnThrows.value.length === maxThrowsPerLeg.value) {
       isProcessingTurn.value = true
       setTimeout(() => finishTurn(), AUTO_FINISH_DELAY_MS)
     } else if (currentPlayer.value.score - currentTurnSum.value <= 0) {
@@ -139,7 +141,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function addPopularCombo(combo: readonly number[]): void {
-    if (combo.length !== MAX_THROWS_PER_TURN) return
+    if (combo.length !== maxThrowsPerLeg.value) return
     if (isGameOver.value || isProcessingTurn.value) return
     if (!currentPlayer.value || currentPlayer.value.isFinished) return
 
@@ -314,6 +316,7 @@ export const useGameStore = defineStore('game', () => {
     startGame({
       playerNames: players.value.map((p) => p.name),
       startScore: startScore.value,
+      throwsPerLeg: maxThrowsPerLeg.value,
       playToLast: playToLast.value,
       endWithDouble: endWithDouble.value,
     })
@@ -405,6 +408,7 @@ export const useGameStore = defineStore('game', () => {
     playToLast,
     startScore,
     multiplier,
+    maxThrowsPerLeg,
     bustModalVisible,
     winModalData,
     isProcessingTurn,

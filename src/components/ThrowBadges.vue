@@ -12,7 +12,7 @@ function badgeColorByMultiplier(multiplier?: number) {
 }
 
 const badges = computed(() =>
-  Array.from({ length: MAX_THROWS_PER_TURN }, (_, i) => ({
+  Array.from({ length: game.maxThrowsPerLeg }, (_, i) => ({
     index: i,
     value: game.currentTurnThrows[i]
       ? game.currentTurnThrows[i]?.zone * game.currentTurnThrows[i]?.multiplier
