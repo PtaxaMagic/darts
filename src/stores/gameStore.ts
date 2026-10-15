@@ -258,6 +258,39 @@ export const useGameStore = defineStore('game', () => {
     persistState()
   }
 
+  function undoLastLeg(): void {
+    if (!history.value.length) return
+
+    let prevLeg = history.value.shift()
+    let prevPlayerIndex = players.value.findIndex(
+      (el) => el.name == prevLeg!.playerName,
+    )
+    let thisRoundLeftHistory = history.value.filter(
+      (el) => el.round == prevLeg!.round,
+    )
+    roundNumber.value = prevLeg!.round
+
+    if (prevLeg?.sum == 'BUST') {
+      currentPlayerIndex.value = prevPlayerIndex
+      return
+    }
+
+    if (prevLeg?.remaining == 0) {
+      players.value[prevPlayerIndex]!.isFinished = false
+      someoneWonInThisRound.value = !!thisRoundLeftHistory.find(
+        (el) => el.remaining == 0,
+      )
+      if (!!someoneWonInThisRound.value) {
+        currentPlace.value--
+      }
+    }
+
+    players.value[prevPlayerIndex]!.score += prevLeg!.sum
+    currentPlayerIndex.value = prevPlayerIndex
+
+    persistState()
+  }
+
   function endGame(): void {
     isGameOver.value = true
     persistState()
@@ -386,6 +419,7 @@ export const useGameStore = defineStore('game', () => {
     addScore,
     addPopularCombo,
     undoLastThrow,
+    advanceToPrevLeg: undoLastLeg,
     resetTurn,
     rematch,
     newGame,
