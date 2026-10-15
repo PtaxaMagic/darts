@@ -400,6 +400,10 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
+  function bust(): void {
+    addScore(currentPlayer.value!.score + 2, 1)
+  }
+
   return {
     players,
     currentPlayerIndex,
@@ -424,6 +428,7 @@ export const useGameStore = defineStore('game', () => {
 
     startGame,
     setMultiplier,
+    bust,
     addScore,
     addPopularCombo,
     undoLastThrow,
