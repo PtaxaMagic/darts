@@ -108,9 +108,13 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function throwToHistoryStr(playerThrow: Throw): string {
-    return playerThrow.multiplier > 1
-      ? `${playerThrow.multiplier}x${playerThrow.zone}`
-      : `${playerThrow.zone}`
+    if (playerThrow.multiplier == 2) {
+      return `D${playerThrow.zone}`
+    }
+    if (playerThrow.multiplier == 3) {
+      return `T${playerThrow.zone}`
+    }
+    return `${playerThrow.zone}`
   }
 
   function addScore(baseValue: number, zoneMultiplier?: number): void {
