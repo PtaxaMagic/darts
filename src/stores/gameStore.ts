@@ -130,6 +130,9 @@ export const useGameStore = defineStore('game', () => {
     if (currentTurnThrows.value.length === MAX_THROWS_PER_TURN) {
       isProcessingTurn.value = true
       setTimeout(() => finishTurn(), AUTO_FINISH_DELAY_MS)
+    } else if (currentPlayer.value.score - currentTurnSum.value <= 0) {
+      isProcessingTurn.value = true
+      setTimeout(() => finishTurn(), AUTO_FINISH_DELAY_MS)
     }
 
     persistState()
@@ -208,7 +211,7 @@ export const useGameStore = defineStore('game', () => {
         remaining: prevScore,
       })
 
-      bustModalVisible.value = true
+      // bustModalVisible.value = true
       persistState()
 
       setTimeout(() => {
