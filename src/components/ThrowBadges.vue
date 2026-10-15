@@ -5,6 +5,12 @@ import { MAX_THROWS_PER_TURN } from '@/constants/dartboard'
 
 const game = useGameStore()
 
+function badgeColorByMultiplier(multiplier?: number) {
+  if (!multiplier || multiplier < 2) return undefined
+  if (multiplier == 2) return 'green'
+  return 'red'
+}
+
 const badges = computed(() =>
   Array.from({ length: MAX_THROWS_PER_TURN }, (_, i) => ({
     index: i,
@@ -12,6 +18,7 @@ const badges = computed(() =>
       ? game.currentTurnThrows[i]?.zone * game.currentTurnThrows[i]?.multiplier
       : undefined,
     hasValue: game.currentTurnThrows[i] !== undefined,
+    color: badgeColorByMultiplier(game.currentTurnThrows[i]?.multiplier),
   })),
 )
 </script>
@@ -23,6 +30,7 @@ const badges = computed(() =>
       :key="badge.index"
       class="throw-badge"
       :class="{ 'throw-active': badge.hasValue }"
+      :style="{ background: badge.color }"
     >
       {{ badge.hasValue ? badge.value : '-' }}
     </div>
@@ -51,9 +59,9 @@ const badges = computed(() =>
 }
 
 .throw-active {
-  background: #198754;
+  background: #19875456;
   color: white;
-  border-color: #146c43;
+  border-color: #146c4359;
   transform: translateY(-3px);
 }
 </style>
