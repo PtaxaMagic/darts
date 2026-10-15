@@ -8,7 +8,7 @@ export interface Player {
 export interface HistoryEntry {
   round: number
   playerName: string
-  throws: number[]
+  throws: string[]
   sum: number | 'BUST'
   remaining: number
 }
@@ -17,6 +17,7 @@ export interface GameSetupConfig {
   playerNames: string[]
   startScore: number
   playToLast: boolean
+  endWithDouble: boolean
 }
 
 export type BoardView = 'circle' | 'classic'

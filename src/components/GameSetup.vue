@@ -9,18 +9,23 @@ const { t } = useI18n()
 const playerNames = shallowRef('Игрок 1, Игрок 2')
 const startScore = shallowRef(301)
 const playToLast = shallowRef(true)
+const endWithDouble = shallowRef(true)
 
 function onStartGame(): void {
   const trimmed = playerNames.value.trim()
   if (!trimmed) return
 
-  const names = trimmed.split(',').map(n => n.trim()).filter(Boolean)
+  const names = trimmed
+    .split(',')
+    .map((n) => n.trim())
+    .filter(Boolean)
   if (names.length === 0) return
 
   game.startGame({
     playerNames: names,
     startScore: startScore.value,
-    playToLast: playToLast.value
+    playToLast: playToLast.value,
+    endWithDouble: endWithDouble.value,
   })
 }
 </script>
@@ -53,6 +58,18 @@ function onStartGame(): void {
         />
         <label class="form-check-label" for="playToLast">
           {{ t('label_play_to_last') }}
+        </label>
+      </div>
+
+      <div class="form-check mb-3 text-start">
+        <input
+          v-model="endWithDouble"
+          class="form-check-input"
+          type="checkbox"
+          id="endWithDouble"
+        />
+        <label class="form-check-label" for="endWithDouble">
+          {{ t('label_end_with_double') }}
         </label>
       </div>
 
