@@ -27,6 +27,8 @@ interface PersistedState {
   history: HistoryEntry[]
   playToLast: boolean
   startScore: number
+  endWithDouble: boolean
+  maxThrowsPerLeg: number
 }
 
 export const useGameStore = defineStore('game', () => {
@@ -358,6 +360,8 @@ export const useGameStore = defineStore('game', () => {
       history: history.value,
       playToLast: playToLast.value,
       startScore: startScore.value,
+      endWithDouble: endWithDouble.value,
+      maxThrowsPerLeg: maxThrowsPerLeg.value,
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
   }
@@ -381,6 +385,8 @@ export const useGameStore = defineStore('game', () => {
       startScore.value = state.startScore ?? 301
       multiplier.value = 1
       isProcessingTurn.value = false
+      endWithDouble.value = state.endWithDouble
+      maxThrowsPerLeg.value = state.maxThrowsPerLeg
 
       // Перезагрузка при открытой модалке победы сбрасывает таймер перехода,
       // поэтому ход остался бы на уже финишировавшем игроке и addScore() отклонял бы все броски.
