@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useGameStore } from '@/stores/gameStore'
 import { useSettingsStore } from '@/stores/settingsStore'
-import { useI18n } from '@/composables/useI18n'
 import ThrowBadges from './ThrowBadges.vue'
 import DartboardCircle from './DartboardCircle.vue'
 import DartboardClassic from './DartboardClassic.vue'
