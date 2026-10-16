@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { ref, shallowRef, computed } from 'vue'
 import type { Player, HistoryEntry, GameSetupConfig } from '@/types/game'
 import {
-  MAX_THROWS_PER_TURN,
   BUST_MODAL_DURATION_MS,
   WIN_MODAL_DURATION_MS,
   AUTO_FINISH_DELAY_MS,
