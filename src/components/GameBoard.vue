@@ -11,14 +11,6 @@ import GameHeader from './GameHeader.vue'
 
 const game = useGameStore()
 const settings = useSettingsStore()
-const { t } = useI18n()
-
-const remainingDisplay = computed(() => {
-  if (!game.currentPlayer || game.currentTurnThrows.length === 0) return null
-  const remaining = game.currentRemaining
-  if (remaining < 0) return { text: '➜ BUST', className: 'remaining-bust' }
-  return { text: `➜ ${remaining}`, className: 'remaining-normal' }
-})
 
 function handleCircleScore(baseValue: number, zoneMultiplier: number): void {
   game.addScore(baseValue, zoneMultiplier)
