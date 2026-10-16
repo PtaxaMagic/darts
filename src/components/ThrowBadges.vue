@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useGameStore } from '@/stores/gameStore'
-import { MAX_THROWS_PER_TURN } from '@/constants/dartboard'
 
 const game = useGameStore()
 
