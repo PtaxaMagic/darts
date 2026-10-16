@@ -284,10 +284,11 @@ export const useGameStore = defineStore('game', () => {
 
     if (prevLeg?.remaining == 0) {
       players.value[prevPlayerIndex]!.isFinished = false
+      players.value[prevPlayerIndex]!.place = null
       someoneWonInThisRound.value = !!thisRoundLeftHistory.find(
         (el) => el.remaining == 0,
       )
-      if (!!someoneWonInThisRound.value) {
+      if (!someoneWonInThisRound.value) {
         currentPlace.value--
       }
     }
